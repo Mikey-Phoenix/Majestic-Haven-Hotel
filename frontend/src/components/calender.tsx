@@ -26,7 +26,7 @@ export default function DatePickerWithRange() {
   return (
     <Field className="mx-auto min-w-60">
       {date &&(
-        <FieldLabel htmlFor="date-picker-range" className="md:text-xl text-lg py-2 px-4 rounded-lg md:rounded-full cursor-pointer hover:bg-[#7a9a77]/40" onclick={() => popoverRef.current?.click()}>
+        <FieldLabel htmlFor="date-picker-range" className="md:text-xl text-lg py-2 px-4 rounded-lg md:rounded-full cursor-pointer hover:bg-[#7a9a77]/40" onClick={() => popoverRef.current?.click()}>
           <CalendarIcon />
           {format((date?.from  || ""), "LLL dd, y")} - {format((date?.to  || ""), "LLL dd, y") || ""}
         </FieldLabel>
