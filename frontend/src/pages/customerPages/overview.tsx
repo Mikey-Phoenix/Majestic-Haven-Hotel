@@ -28,7 +28,13 @@ const dangerButton = `${buttonBase} border border-red-300 bg-white text-red-600 
 
 function OverView({ bookings }: Props) {
     const otherImages = useRef<HTMLDivElement>(null);
-    const [visible, setVisible] = useState("hidden")
+    const [visible, setVisible] = useState("hidden");
+    const [rating, setRating] = useState(5);
+    const star1 = useRef<HTMLSpanElement>(null)
+    const star2 = useRef<HTMLSpanElement>(null)
+    const star3 = useRef<HTMLSpanElement>(null)
+    const star4 = useRef<HTMLSpanElement>(null)
+    const star5 = useRef<HTMLSpanElement>(null)
     return(
 
         <main className="flex min-h-screen flex-col md:min-w-0 md:flex-1 lg:flex-row">
@@ -64,11 +70,39 @@ function OverView({ bookings }: Props) {
                 <div className="w-full mb-4">
                     <h2 className="text-3xl font-bold text-[#3f5a42] md:text-4xl">Leave a Review</h2>
                     <div className="flex space-x-3 my-2 ">
-                        <IoStar className="text-xl text-amber-500" />
-                        <IoStar className="text-xl text-amber-500" />
-                        <IoStar className="text-xl text-amber-500" />
-                        <IoStar className="text-xl text-amber-500" />
-                        <IoStar className="text-xl text-amber-500" />
+                        <span ref={star1} className="text-xl text-amber-500 cursor-pointer hover:text-xxl" onClick={() => setRating(1)}>
+                            {rating >= 1 && (
+                                <IoStar/>
+                            )}
+                        </span>
+                        <span ref={star2} className="text-xl text-amber-500 cursor-pointer hover:text-xxl" onClick={() => setRating(2)}>
+                            {rating >= 2 ? (
+                                <IoStar/>
+                            ) : (
+                                <IoStarOutline/>
+                            )}
+                        </span>
+                        <span ref={star3} className="text-xl text-amber-500 cursor-pointer hover:text-xxl" onClick={() => setRating(3)}>
+                            {rating >= 3 ? (
+                                <IoStar/>
+                            ) : (
+                                <IoStarOutline/>
+                            )}
+                        </span>
+                        <span ref={star4} className="text-xl text-amber-500 cursor-pointer hover:text-xxl" onClick={() => setRating(4)}>
+                            {rating >= 4 ? (
+                                <IoStar/>
+                            ) : (
+                                <IoStarOutline/>
+                            )}
+                        </span>
+                        <span ref={star5} className="text-xl text-amber-500 cursor-pointer hover:text-xxl" onClick={() => setRating(5)}>
+                            {rating >= 5? (
+                                <IoStar/>
+                            ) : (
+                                <IoStarOutline/>
+                            )}
+                        </span>
                     </div>
                     <textarea name="" id="" className="w-full h-24 p-2 border rounded-md">Perfect room service!</textarea>
                     <button className="mt-4 w-full rounded-full bg-[#6f9170] py-2 text-white hover:bg-[#4f7a52] cursor-pointer">Leave Review</button>

@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card"
+import { Link } from "react-router-dom"
 
 export default function CardImage() {
   return (
@@ -28,24 +29,27 @@ export default function CardImage() {
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button className="w-full py-2 h-fit bg-[#6f9170] justify-end cursor-pointer" onClick={() => window.location.replace("/room")}>
-            <p className="flex-1 pl-5">Book Room</p>
-            <span className="grid h-7 lg:h-9 w-7 lg:w-9 place-items-center rounded-full text-[#6f9170] bg-white transition-transform group-hover:translate-x-0.5">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-5 w-5"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14" />
-              <path d="M13 6l6 6-6 6" />
-            </svg>
-          </span>
-        </Button>
+        <Link className="w-full" to={"/room"}>
+          <Button className="w-full py-2 h-fit bg-[#6f9170] justify-end cursor-pointer">
+              <p className="flex-1 pl-5">Book Room</p>
+              <span className="grid h-7 lg:h-9 w-7 lg:w-9 place-items-center rounded-full text-[#6f9170] bg-white transition-transform group-hover:translate-x-0.5">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </Button>
+        
+        </Link>
       </CardFooter>
     </Card>
   )

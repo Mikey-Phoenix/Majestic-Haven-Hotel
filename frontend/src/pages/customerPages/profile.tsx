@@ -72,7 +72,7 @@ function profile({ customer, room, requests, bookings }: Props) {
   ];
 
   return (
-    <section className="grid gap-5 p-5 lg:grid-cols-[1fr_20rem] xl:grid-cols-[1fr_24rem]">
+    <section className="grid gap-5 p-5 lg:grid-cols-[1fr_20rem] xl:grid-cols-[1fr_24rem] overflow-y-auto">
       {/* Customer information (large block) */}
       <article className="rounded-2xl border bg-white p-6 md:p-8">
         <div className="flex flex-col items-center text-center">

@@ -24,7 +24,7 @@ export default function DatePickerWithRange() {
   const popoverRef = useRef<HTMLButtonElement>(null)
 
   return (
-    <Field className="mx-auto min-w-60">
+    <Field className={`mx-auto min-w-[60%]`}>
       {date &&(
         <FieldLabel htmlFor="date-picker-range" className="md:text-xl text-lg py-2 px-4 rounded-lg md:rounded-full cursor-pointer hover:bg-[#7a9a77]/40" >
           <CalendarIcon />

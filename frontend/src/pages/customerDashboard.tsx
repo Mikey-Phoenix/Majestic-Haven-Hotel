@@ -72,7 +72,7 @@ function CustomerDashboard({ isAdmin = false }: { isAdmin?: boolean }) {
 
       <div className="mt-16 flex w-full flex-col md:flex-row">
         {/* Sidebar */}
-        <SideBar activeTab={activeTab} setActiveTab={setActiveTab} username={username} mobileNav={mobileNav} />
+        <SideBar activeTab={activeTab} setActiveTab={setActiveTab} username={username} mobileNav={mobileNav} setMobileNav={setMobileNav} />
 
         {/* Main content */}
         {activeTab === "Room" ? (
@@ -169,11 +169,11 @@ type Props = {
     mobileNav: string;
     setMobileNav : (tab: string) => void;
 }
-type SideBarProps = Pick<Props, "activeTab" | "setActiveTab" | "username" | "mobileNav">;
+type SideBarProps = Pick<Props, "activeTab" | "setActiveTab" | "username" | "mobileNav" | "setMobileNav">;
 
-function SideBar({activeTab, setActiveTab, username, mobileNav}: SideBarProps) {
+function SideBar({activeTab, setActiveTab, username, mobileNav, setMobileNav}: SideBarProps) {
     return (
-        <aside className={`bg-[#ebf0da] p-3 h-screen md:min-h-screen w-full md:w-64 md:shrink-0 md:px-6 md:py-10 lg:w-72 fixed md:static z-50 ${mobileNav} md:translate-x-0`}>
+        <aside className={`bg-[#ebf0da] p-3 min-h-screen lg:min-h-screen w-full md:w-64 md:shrink-0 md:px-6 md:py-10 lg:w-72 fixed md:static z-50 ${mobileNav} md:translate-x-0`}>
           {/* Greeting (desktop only) */}
           <div className="block">
             <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#6f9170]">Your space</p>
@@ -182,7 +182,7 @@ function SideBar({activeTab, setActiveTab, username, mobileNav}: SideBarProps) {
             <hr className="my-6 border-[#3f5a42]/15" />
           </div>
 
-          <nav aria-label="Dashboard" className="flex gap-2 overflow-x-auto flex-col md:gap-8 md:overflow-visible">
+          <nav aria-label="Dashboard" className="flex gap-2 overflow-x-auto flex-col md:gap-8 md:overflow-visible" onClick={() => setMobileNav("translate-x-[-100vw]")}>
             <SidebarGroup items={customerNav} activeTab={activeTab} onSelect={setActiveTab} />
           </nav>
           <button className="mt-4 w-full rounded-full bg-[#6f9170] py-2 text-white hover:bg-[#4f7a52]">

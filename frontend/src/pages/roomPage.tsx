@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import type { IconType } from "react-icons";
@@ -20,6 +21,7 @@ import {
 import GuestsDial from "../components/guestsDial";
 import Calender from "../components/calender";
 import Card from "../components/card";
+import { useScrollUp } from "../components/hooks/hideNavbar";
 
 export type RoomMedia = {
   type: "image" | "video";
@@ -192,23 +194,59 @@ export default function RoomDetails({
       }).format(room.price.amount)
     : null;
 
+     const hidden = useScrollUp();
+    console.log(hidden);
+    
+    function screenTop() {
+        const y = Math.max(window.scrollY, 0);
+        if ( y == 0 ) return true;
+        return false;
+    }
+
   return (
     <>
-        <Navbar />
-        <div className="border-white/70 bg-linear-to-r from-[#e2e9cd] via-[#ebf0da] to-[#e2e9cd] shadow-[inset_0_0_14px_rgba(255,255,255,0.6)] backdrop-blur-md w-[95vw] md:[80vw] lg:w-[70vw] mx-auto mt-3 py-3 px-5 md:flex items-center justify-between gap-5 rounded-lg md:rounded-full">
-            <div className="flex items-center gap-3 text-xl">
-                
-                {/* <label>Wed, Nov 25 - Thur, Nov 26</label> */}
-                {/* <input type="date" id="date" className="hidden"/> */}
-                <Calender />
-            </div>
-            <div className="flex items-center gap-3 text-xl">
-                {/* <IoPersonOutline />
-                <p>1 room, 1 adult, 0 children</p> */}
-                <GuestsDial />
-            </div>
-        </div>
-        <section className="mx-auto grid w-[95vw] gap-8 py-10 md:w-[90vw] lg:grid-cols-[3fr_2fr]">
+        <header className="fixed top-0 w-full z-50" >
+          {/* <header className={`${hidden ? "hidden" : ""}`}> */}
+          {screenTop() ? (
+              <Navbar />
+          ): hidden && (
+              <div className="fade">
+                  <Navbar />
+              </div>
+          )}
+          {/* </header> */}
+          {hidden ? (
+              <div className="border-white/70 bg-linear-to-r from-[#e2e9cd] via-[#ebf0da] to-[#e2e9cd] shadow-[inset_0_0_14px_rgba(255,255,255,0.6)] backdrop-blur-md w-[95vw] md:[80vw] lg:w-[70vw] mx-auto mt-3 py-3 px-5 md:flex items-center justify-between gap-5 rounded-lg md:rounded-full">
+                  <div className="flex items-center gap-3 text-xl">
+                      
+                      {/* <label>Wed, Nov 25 - Thur, Nov 26</label> */}
+                      {/* <input type="date" id="date" className="hidden"/> */}
+                      <Calender />
+                  </div>
+                  <div className="flex items-center gap-3 text-xl">
+                      {/* <IoPersonOutline />
+                      <p>1 room, 1 adult, 0 children</p> */}
+                      <GuestsDial />
+                  </div>
+              </div>
+          ):(
+              <div className="border-white/70 bg-linear-to-r from-[#e2e9cd] via-[#ebf0da] to-[#e2e9cd] shadow-[inset_0_0_14px_rgba(255,255,255,0.6)] backdrop-blur-md w-[95vw] md:[85vw] lg:w-[55vw] mx-auto mt-3 py-1 px-2 md:flex items-center justify-between gap-5 rounded-lg md:rounded-full">
+                  <div className="flex items-center gap-3 text-xl">
+                      
+                      {/* <label>Wed, Nov 25 - Thur, Nov 26</label> */}
+                      {/* <input type="date" id="date" className="hidden"/> */}
+                      <Calender />
+                  </div>
+                  <div className="flex items-center gap-3 text-xl">
+                      {/* <IoPersonOutline />
+                      <p>1 room, 1 adult, 0 children</p> */}
+                      <GuestsDial />
+                  </div>
+              </div>
+          )}
+
+      </header>
+        <section className="mx-auto mt-40 grid w-[95vw] gap-8 py-10 md:w-[90vw] lg:grid-cols-[3fr_2fr]">
         
         <Gallery media={room.media} name={room.name} />
 
@@ -261,13 +299,14 @@ export default function RoomDetails({
             ) : (
                 <span />
             )}
-            <button
-                type="button"
-                onClick={() => {onSelect(room), window.location.href = "/customer-dashboard"}}
-                className="rounded-full bg-[#6f9170] px-8 py-3 text-white text-sm md:text-base transition-colors hover:bg-[#5b7d5d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6f9170] cursor-pointer"
-            >
-                Select Room
-            </button>
+            <Link to={"/customer-dashboard"}>
+              <button
+                  type="button"
+                  className="rounded-full bg-[#6f9170] px-8 py-3 text-white text-sm md:text-base transition-colors hover:bg-[#5b7d5d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6f9170] cursor-pointer"
+              >
+                  Select Room
+              </button>
+            </Link>
             </div>
         </div>
         </section>
