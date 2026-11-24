@@ -42,7 +42,7 @@ export default function Footer({
     <footer className="w-full bg-white px-3 pb-2 pt-3 font-['Montserrat',sans-serif]">
       {/* Green panel with the notch cut out of the top edge */}
       <div
-        className="relative mx-auto flex min-h-[560px] flex-col justify-between overflow-hidden rounded-xl bg-[#78967a]"
+        className="relative mx-auto flex min-h-[560px] flex-col justify-between overflow-hidden rounded-xl bg-(--main)"
         style={{
           clipPath:
             "polygon(0 0, 18% 0, 27.5% 45px, 74% 45px, 81.5% 0, 100% 0, 100% 100%, 0 100%)",

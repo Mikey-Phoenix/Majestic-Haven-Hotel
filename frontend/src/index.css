@@ -117,6 +117,14 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+@theme {
+  --main: #6f9170;
+  --main-hover: #4f7a52;
+  --main-text: #2f4432;
+  --gradient-edge: #e2e9cd;
+  --gradient-mid: #ebf0da;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

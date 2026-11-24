@@ -1,24 +1,25 @@
 import { useMemo, useState } from "react";
 import HistoryCard from "../../components/historyCard";
+import type { Booking } from "../../data/mockData";
 // import type { Booking, BookingStatus } from "../../types/booking";
 
-type BookingStatus = "Completed" | "Upcoming" | "Cancelled";
+type BookingStatus = "Completed" | "Upcoming" | "Cancelled" | "Active";
 type Filter = "All" | BookingStatus;
 
 const filters: Filter[] = ["All", "Upcoming", "Completed", "Cancelled"];
 
-interface Props {
-  bookings: readonly Booking[];
+type Props = {
+    bookings: Array<Booking>;
 }
 
-interface Booking {
-  id: string;
-  roomName: string;
-  checkIn: string; // ISO date, e.g. "2026-10-12"
-  checkOut: string;
-  total: string;
-  status: "Completed" | "Upcoming" | "Cancelled";
-}
+// interface Booking {
+//   id: string;
+//   roomName: string;
+//   checkIn: string; // ISO date, e.g. "2026-10-12"
+//   checkOut: string;
+//   total: string;
+//   status: "Completed" | "Upcoming" | "Cancelled";
+// }
 
 function History({ bookings }: Props) {
   const [filter, setFilter] = useState<Filter>("All");

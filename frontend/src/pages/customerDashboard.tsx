@@ -4,27 +4,35 @@ import { User, Phone } from "lucide-react";
 import Overview from "./customerPages/overview";
 import History from "./customerPages/history";
 import Profile from "./customerPages/profile";
+import { mockUser } from "../data/mockData";
+import { mockRoom } from "../data/mockData";
+import type { Booking } from "../data/mockData";
 
 /* ---------- Types & sample data ---------- */
 
-type BookingStatus = "Completed" | "Upcoming" | "Cancelled";
+// type BookingStatus = "upcoming" | "active" | "completed" | "cancelled";
 
-interface Booking {
-  id: string;
-  roomName: string;
-  checkIn: string; // ISO date, e.g. "2026-10-12"
-  checkOut: string;
-  total: string;
-  status: BookingStatus;
+// interface Booking {
+//   id: string;
+//   roomName: string;
+//   checkIn: string; // ISO date, e.g. "2026-10-12"
+//   checkOut: string;
+//   total: string;
+//   status: BookingStatus;
+// }
+
+// // Placeholder data - replace with a fetch to your backend later
+// const bookings: Booking[] = [
+//   { id: "MH-20481", roomName: "Deluxe King Room", checkIn: "2026-10-12", checkOut: "2026-10-15", total: "₦180,000", status: "Completed" },
+//   { id: "MH-20377", roomName: "Executive Suite", checkIn: "2026-08-02", checkOut: "2026-08-04", total: "₦240,000", status: "Completed" },
+//   { id: "MH-20290", roomName: "Standard Twin Room", checkIn: "2026-06-18", checkOut: "2026-06-19", total: "₦65,000", status: "Cancelled" },
+//   { id: "MH-20512", roomName: "Deluxe King Room", checkIn: "2026-12-20", checkOut: "2026-12-27", total: "₦420,000", status: "Upcoming" },
+// ];
+
+type BookingProps = {
+    bookings: Array<Booking>;
+    isAdmin?: boolean;
 }
-
-// Placeholder data - replace with a fetch to your backend later
-const bookings: Booking[] = [
-  { id: "MH-20481", roomName: "Deluxe King Room", checkIn: "2026-10-12", checkOut: "2026-10-15", total: "₦180,000", status: "Completed" },
-  { id: "MH-20377", roomName: "Executive Suite", checkIn: "2026-08-02", checkOut: "2026-08-04", total: "₦240,000", status: "Completed" },
-  { id: "MH-20290", roomName: "Standard Twin Room", checkIn: "2026-06-18", checkOut: "2026-06-19", total: "₦65,000", status: "Cancelled" },
-  { id: "MH-20512", roomName: "Deluxe King Room", checkIn: "2026-12-20", checkOut: "2026-12-27", total: "₦420,000", status: "Upcoming" },
-];
 
 interface NavItem {
   id: string;
@@ -60,29 +68,36 @@ const links = [
 
 /* ---------- Page ---------- */
 
-function CustomerDashboard({ isAdmin = false }: { isAdmin?: boolean }) {
+function CustomerDashboard({bookings, isAdmin}: BookingProps) {
+  const user = mockUser;
+  const room = mockRoom;
   const [activeTab, setActiveTab] = useState<string>("Room");
   const [mobileNav, setMobileNav] = useState<string>("translate-x-[-100vw]");
-  const username = "Username"; // TODO: replace with the logged-in user's name
+  const username = user.username; // TODO: replace with the logged-in user's name
+
+  // console.log(mockUser);
 
   return (
     <div>
       {/* Top bar */}
-      <HeaderNav mobileNav={mobileNav} setMobileNav={setMobileNav} />
+      <HeaderNav mobileNav={mobileNav} setMobileNav={setMobileNav} username={username} />
 
       <div className="mt-16 flex w-full flex-col md:flex-row">
         {/* Sidebar */}
         <SideBar activeTab={activeTab} setActiveTab={setActiveTab} username={username} mobileNav={mobileNav} setMobileNav={setMobileNav} />
 
         {/* Main content */}
-        {activeTab === "Room" ? (
-          <Overview bookings={bookings} />
-        ) : activeTab === "History" ? (
-          <History bookings={bookings} />
-        ) : (   
-            <Profile customer={dummyCustomer} room={dummyRoom} requests={dummyRequests} bookings={dummyBookings}
-/>
-        )}
+        <div className="md:w-[calc(100%-18rem)] md:ml-72">
+          {activeTab === "Room" ? (
+            <Overview bookings={bookings} user={user} room={room} />
+          ) : activeTab === "History" ? (
+            <History bookings={bookings} />
+          ) : (   
+              <Profile customer={user} room={room} requests={dummyRequests} bookings={dummyBookings}
+  />
+          )}
+
+        </div>
       </div>
     </div>
   );
@@ -115,8 +130,8 @@ function SidebarGroup({ title, items, activeTab, onSelect }: SidebarGroupProps) 
             aria-current={active ? "page" : undefined}
             className={`w-full shrink-0 cursor-pointer whitespace-nowrap rounded-xl px-4 py-3 text-left text-[15px] transition-colors md:w-full ${
               active
-                ? "bg-white font-medium text-[#2f4432] shadow-sm"
-                : "text-[#5f7260] hover:bg-white/60 hover:text-[#2f4432]"
+                ? "bg-white font-medium text-(--main-text) shadow-sm"
+                : "text-[#5f7260] hover:bg-white/60 hover:text-(--main-text)"
             }`}
           >
             {item.label}
@@ -129,11 +144,11 @@ function SidebarGroup({ title, items, activeTab, onSelect }: SidebarGroupProps) 
 
 
 
-type HeaderNavProps = Pick<Props, "mobileNav" | "setMobileNav">;
+type HeaderNavProps = Pick<Props, "mobileNav" | "setMobileNav" | "username">;
 
-function HeaderNav({ mobileNav, setMobileNav}:HeaderNavProps) {
+function HeaderNav({ mobileNav, setMobileNav, username}:HeaderNavProps) {
     return (
-        <header className="fixed top-0 left-0 z-10 mx-auto grid h-16 w-full grid-cols-[1fr_auto_1fr] items-center bg-linear-to-r from-[#e2e9cd] via-[#ebf0da] to-[#e2e9cd] py-1.5 pl-3 pr-1.5 shadow-[inset_0_0_14px_rgba(255,255,255,0.6)] backdrop-blur-md">
+        <header className="fixed top-0 left-0 z-11 mx-auto grid h-16 w-full grid-cols-[1fr_auto_1fr] items-center bg-linear-to-r from-[#e2e9cd] via-[#ebf0da] to-[#e2e9cd] py-1.5 pl-3 pr-1.5 shadow-[inset_0_0_14px_rgba(255,255,255,0.6)] backdrop-blur-md">
             <div aria-label="Majestic Haven home" className="h-10 w-10 rounded-full bg-[#7a9a77] cursor-pointer" onClick={() => {mobileNav == "translate-x-[-100vw]" ? (setMobileNav("translate-x-[0vw]")) : (setMobileNav("translate-x-[-100vw]"))}} ></div>
 
             {/* Links */}
@@ -157,7 +172,7 @@ function HeaderNav({ mobileNav, setMobileNav}:HeaderNavProps) {
             <span className="grid h-9 w-9 place-items-center rounded-full bg-[#6f9170] text-white transition-transform group-hover:translate-x-0.5">
                 <User />
             </span>
-            <span className="flex-1 truncate px-2 text-center">Username</span>
+            <span className="flex-1 truncate px-2 text-center">{username}</span>
             </a>
         </header>
     )
@@ -173,11 +188,11 @@ type SideBarProps = Pick<Props, "activeTab" | "setActiveTab" | "username" | "mob
 
 function SideBar({activeTab, setActiveTab, username, mobileNav, setMobileNav}: SideBarProps) {
     return (
-        <aside className={`bg-[#ebf0da] p-3 min-h-screen lg:min-h-screen w-full md:w-64 md:shrink-0 md:px-6 md:py-10 lg:w-72 fixed md:static z-50 ${mobileNav} md:translate-x-0`}>
+        <aside className={`bg-[#ebf0da] p-3 min-h-screen lg:min-h-screen w-full md:w-64 md:shrink-0 md:px-6 md:py-10 lg:w-72 fixed z-10 ${mobileNav} md:translate-x-0`}>
           {/* Greeting (desktop only) */}
           <div className="block">
             <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#6f9170]">Your space</p>
-            <h2 className="mt-3 font-serif text-3xl font-bold leading-tight text-[#2f4432]">Hello, {username}</h2>
+            <h2 className="mt-3 font-serif text-3xl font-bold leading-tight text-(--main-text)">Hello, {username}</h2>
             <p className="mt-3 text-sm leading-relaxed text-[#6f7f6e]">Everything for your stay, in one place.</p>
             <hr className="my-6 border-[#3f5a42]/15" />
           </div>

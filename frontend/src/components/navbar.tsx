@@ -10,22 +10,22 @@ export default function Navbar() {
     <header className="w-full px-3 pt-3">
       <nav
         aria-label="Main navigation"
-        className="mx-auto grid h-16 max-w-[1260px] grid-cols-[1fr_auto_1fr] items-center rounded-full border border-white/70 bg-linear-to-r from-[#e2e9cd] via-[#ebf0da] to-[#e2e9cd] py-1.5 pl-3 pr-1.5 shadow-[inset_0_0_14px_rgba(255,255,255,0.6)] backdrop-blur-md"
+        className="mx-auto grid h-16 max-w-[1260px] grid-cols-[1fr_auto_1fr] items-center rounded-full border border-white/70 bg-linear-to-r from-(--gradient-edge) via-(--gradient-mid) to-(--gradient-edge) py-1.5 pl-3 pr-1.5 shadow-[inset_0_0_14px_rgba(255,255,255,0.6)] backdrop-blur-md"
       >
         {/* Logo placeholder: replace with your <img> */}
         <a
           href="/"
           aria-label="Majestic Haven home"
-          className="h-10 w-10 rounded-full bg-[#6f9170]"
+          className="h-10 w-10 rounded-full bg-(--main)"
         />
 
         {/* Links */}
-        <ul className="hidden items-center gap-12 text-[15px] text-[#6f9170] md:flex">
+        <ul className="hidden items-center gap-12 text-[15px] text-(--main) md:flex">
           {links.map((link) => (
             <li key={link.label}>
               <a
                 href={link.href}
-                className="transition-colors hover:text-[#4f7a52]"
+                className="transition-colors hover:text-(--main-hover)"
               >
                 {link.label}
               </a>
@@ -36,10 +36,10 @@ export default function Navbar() {
         {/* Book Now */}
         <a
           href="/bookings"
-          className="group col-start-3 flex h-full w-44 items-center justify-self-end rounded-full bg-white p-1.5 text-[15px] text-[#6f9170] transition-shadow hover:shadow-md md:w-60"
+          className="group col-start-3 flex h-full w-44 items-center justify-self-end rounded-full bg-white p-1.5 text-[15px] text-(--main) transition-shadow hover:shadow-md md:w-60"
         >
           <span className="flex-1 text-center">Book Now</span>
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-[#6f9170] text-white transition-transform group-hover:translate-x-0.5">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-(--main) text-white transition-transform group-hover:translate-x-0.5">
             <svg
               viewBox="0 0 24 24"
               fill="none"

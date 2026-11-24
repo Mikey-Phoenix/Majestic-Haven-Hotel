@@ -1,30 +1,32 @@
 import { Mail, Phone, MapPin, CalendarDays } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
+import type { Room } from "../../data/mockData";
+import type { User } from "../../data/mockData";
 // import type { Booking, BookingStatus } from "../../types/booking";
 
 /* ---------- Types ---------- */
-type BookingStatus = "Completed" | "Upcoming" | "Cancelled";
+type BookingStatus = "Completed" | "Upcoming" | "Cancelled" | "Active";
 interface Booking {
   id: string;
   roomName: string;
   checkIn: string; // ISO date, e.g. "2026-10-12"
   checkOut: string;
   total: string;
-  status: "Completed" | "Upcoming" | "Cancelled";
+  status: "Completed" | "Upcoming" | "Cancelled" | "Active";
 }
-interface Customer {
-  fullName: string;
-  email: string;
-  phone: string;
-  location: string;
-  memberSince: string; // ISO date
-  avatarUrl?: string;
-}
+// interface Customer {
+//   fullName: string;
+//   email: string;
+//   phone: string;
+//   location: string;
+//   memberSince: string; // ISO date
+//   avatarUrl?: string;
+// }
 
-interface Room {
-  name: string;
-  imageUrl?: string;
-}
+// interface Room {
+//   name: string;
+//   imageUrl?: string;
+// }
 
 interface ServiceRequest {
   id: string;
@@ -34,7 +36,7 @@ interface ServiceRequest {
 }
 
 interface Props {
-  customer: Customer;
+  customer: User;
   room: Room;
   requests: readonly ServiceRequest[];
   bookings: readonly Booking[];
@@ -57,6 +59,7 @@ const statusStyles: Record<BookingStatus | ServiceRequest["status"], string> = {
   Completed: "bg-[#e2e9cd] text-[#3f5a42]",
   Upcoming: "bg-blue-100 text-blue-700",
   Cancelled: "bg-red-100 text-red-600",
+  Active: "bg-amber-100 text-amber-700",
   Pending: "bg-amber-100 text-amber-700",
   Done: "bg-[#e2e9cd] text-[#3f5a42]",
 };
@@ -68,7 +71,7 @@ function profile({ customer, room, requests, bookings }: Props) {
     { icon: Mail, label: "Email", value: customer.email },
     { icon: Phone, label: "Phone", value: customer.phone },
     { icon: MapPin, label: "Location", value: customer.location },
-    { icon: CalendarDays, label: "Member since", value: formatDate(customer.memberSince) },
+    { icon: CalendarDays, label: "Member since", value: formatDate(customer.dateJoined) },
   ];
 
   return (
@@ -76,21 +79,21 @@ function profile({ customer, room, requests, bookings }: Props) {
       {/* Customer information (large block) */}
       <article className="rounded-2xl border bg-white p-6 md:p-8">
         <div className="flex flex-col items-center text-center">
-          {customer.avatarUrl ? (
+          {/* {customer.avatarUrl ? (
             <img
               src={customer.avatarUrl}
-              alt={`${customer.fullName} profile`}
+              alt={`${customer.username} profile`}
               className="h-32 w-32 rounded-full object-cover ring-4 ring-[#e2e9cd]"
             />
-          ) : (
+          ) : ( */}
             <div
               aria-hidden="true"
               className="grid h-32 w-32 place-items-center rounded-full bg-[#7a9a77]/40 text-4xl font-bold text-[#3f5a42] ring-4 ring-[#e2e9cd]"
             >
-              {initials(customer.fullName)}
+              {initials(customer.username)}
             </div>
-          )}
-          <h1 className="mt-4 text-3xl font-bold text-[#3f5a42] md:text-4xl">{customer.fullName}</h1>
+          {/* )} */}
+          <h1 className="mt-4 text-3xl font-bold text-[#3f5a42] md:text-4xl">{customer.username}</h1>
           <p className="mt-1 text-sm text-gray-500">Guest at Majestic Haven</p>
         </div>
 
@@ -102,7 +105,7 @@ function profile({ customer, room, requests, bookings }: Props) {
               </span>
               <div className="min-w-0">
                 <dt className="text-xs uppercase tracking-wide text-[#6f9170]">{label}</dt>
-                <dd className="truncate text-[#2f4432]">{value}</dd>
+                <dd className="truncate text-(--main-text)">{value}</dd>
               </div>
             </div>
           ))}
@@ -122,9 +125,9 @@ function profile({ customer, room, requests, bookings }: Props) {
       <aside className="flex flex-col space-y-5 md:h-[90vh] overflow-y-auto">
         <div className="h-max">
             <figure className="overflow-hidden rounded-2xl mb-5 border bg-white">
-            {room.imageUrl ? (
+            {room.media[0].url ? (
                 // bg-[url('/assets/room_1.webp')] bg-center bg-cover bg-no-repeat
-                <img src={room.imageUrl} alt={room.name} className="aspect-video w-full object-cover" />
+                <img src={room.media[0].url} alt={room.name} className="aspect-video w-full object-cover" />
             ) : (
                 <img src={'/assets/room_1.webp'} alt={room.name} className="aspect-video w-full object-cover" />
                 // <div className="aspect-video w-full bg-gray-200" />
@@ -198,7 +201,7 @@ function ListRow({
   return (
     <li className="flex items-center justify-between gap-3 py-2.5">
       <div className="min-w-0">
-        <p className="truncate text-sm font-medium text-[#2f4432]">{primary}</p>
+        <p className="truncate text-sm font-medium text-(--main-text)">{primary}</p>
         <p className="truncate text-xs text-gray-500">{secondary}</p>
       </div>
       <Badge variant="secondary" className={`shrink-0 ${statusStyles[status]}`}>

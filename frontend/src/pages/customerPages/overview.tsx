@@ -1,32 +1,33 @@
 import { useRef, useState } from "react";
 import { Badge } from "../../components/ui/badge";
 import HistoryCard from "../../components/historyCard";
+import type { Booking } from "../../data/mockData";
+import type { Room } from "../../data/mockData";
 import {
   IoStar,
   IoStarHalf,
   IoStarOutline,
 } from "react-icons/io5";
 
+// interface books {
+//     bookings: Array<Booking>;
+// }
+
 type Props = {
     bookings: Array<Booking>;
+    user: object;
+    room: Room;
 }
 // type BookingStatus = ;
-interface Booking {
-  id: string;
-  roomName: string;
-  checkIn: string; // ISO date, e.g. "2026-10-12"
-  checkOut: string;
-  total: string;
-  status: "Completed" | "Upcoming" | "Cancelled";
-}
 const buttonBase =
   "rounded-full px-8 py-3 text-sm md:text-base transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6f9170]";
 const primaryButton = `${buttonBase} bg-[#6f9170] text-white hover:bg-[#5b7d5d]`;
 const dangerButton = `${buttonBase} border border-red-300 bg-white text-red-600 hover:bg-red-50`;
 
 // const navLabel = (id: string) => [...customerNav, ...adminNav].find((item) => item.id === id)?.label ?? id;
+// console.log(Booking)
 
-function OverView({ bookings }: Props) {
+function OverView({ bookings, user, room }: Props) {
     const otherImages = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState("hidden");
     const [rating, setRating] = useState(5);
@@ -35,6 +36,8 @@ function OverView({ bookings }: Props) {
     const star3 = useRef<HTMLSpanElement>(null)
     const star4 = useRef<HTMLSpanElement>(null)
     const star5 = useRef<HTMLSpanElement>(null)
+
+    // console.log(room.name)
     return(
 
         <main className="flex min-h-screen flex-col md:min-w-0 md:flex-1 lg:flex-row">
@@ -50,12 +53,12 @@ function OverView({ bookings }: Props) {
                 </div>
                 <div className="mt-5 flex items-start justify-between gap-4">
                     <div>
-                    <h1 className="text-3xl font-bold text-[#3f5a42] md:text-4xl">Room Name</h1>
-                    <p className="mt-5 leading-relaxed text-gray-700">Room Description</p>
+                    <h1 className="text-3xl font-bold text-[#3f5a42] md:text-4xl">{room.name}</h1>
+                    <p className="mt-5 leading-relaxed text-gray-700">{room.description}</p>
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                    <Badge className="p-4 text-xl" variant="secondary">Verified</Badge>
-                    <Badge className="p-4 text-xl" variant="secondary">Class</Badge>
+                    <Badge className="p-4 text-xl" variant="secondary">{room.status}</Badge>
+                    <Badge className="p-4 text-xl" variant="secondary">{room.class}</Badge>
                     </div>
                 </div>
                 <div className="mt-5 flex flex-wrap items-center gap-3">

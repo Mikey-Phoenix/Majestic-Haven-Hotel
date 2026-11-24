@@ -9,8 +9,13 @@ import {
   CardTitle,
 } from "./ui/card"
 import { Link } from "react-router-dom"
+import type { Room } from "../data/mockData"
 
-export default function CardImage() {
+type Props = {
+  room: Room;
+}
+
+export default function CardImage({ room }: Props) {
   return (
     <Card className="relative mx-auto w-full max-w-sm pt-0">
       <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
@@ -21,11 +26,11 @@ export default function CardImage() {
       />
       <CardHeader>
         <CardAction>
-          <Badge variant="secondary">Class</Badge>
+          <Badge variant="secondary">{room.class}</Badge>
         </CardAction>
-        <CardTitle>Room Number</CardTitle>
+        <CardTitle>{room.name}</CardTitle>
         <CardDescription>
-          Room's amenities and whatever
+          {(room.description).slice(0, 100)}...
         </CardDescription>
       </CardHeader>
       <CardFooter>

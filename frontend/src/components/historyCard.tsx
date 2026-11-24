@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Badge } from "./ui/badge";
 import BookingDetailsDialog from "./historyDetails";
-import type { Booking } from "./types/booking";
+// import type { Booking } from "./types/booking";
+import type { Booking } from "../data/mockData";
 import { formatDate, nightsBetween, statusStyles } from "./utils/booking";
 
 function HistoryCard({ booking }: { booking: Booking }) {

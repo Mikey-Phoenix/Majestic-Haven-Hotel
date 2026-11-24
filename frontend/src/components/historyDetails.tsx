@@ -57,7 +57,7 @@ function BookingDetailsDialog({ booking, open, onOpenChange }: Props) {
           {rows.map((row) => (
             <div key={row.label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-gray-500">{row.label}</dt>
-              <dd className="text-right font-medium text-[#2f4432]">{row.value}</dd>
+              <dd className="text-right font-medium text-(--main-text)">{row.value}</dd>
             </div>
           ))}
         </dl>
@@ -65,7 +65,7 @@ function BookingDetailsDialog({ booking, open, onOpenChange }: Props) {
         {booking.specialRequests && (
           <div className="rounded-lg bg-[#ebf0da]/60 p-3 text-sm">
             <p className="text-xs uppercase tracking-wide text-[#6f9170]">Special requests</p>
-            <p className="mt-1 text-[#2f4432]">{booking.specialRequests}</p>
+            <p className="mt-1 text-(--main-text)">{booking.specialRequests}</p>
           </div>
         )}
 

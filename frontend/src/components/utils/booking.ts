@@ -4,6 +4,7 @@ export const statusStyles: Record<BookingStatus, string> = {
   Completed: "bg-[#e2e9cd] text-[#3f5a42]",
   Upcoming: "bg-blue-100 text-blue-700",
   Cancelled: "bg-red-100 text-red-600",
+  Active: "bg-amber-100 text-amber-700",
 };
 
 export const formatDate = (iso: string) =>
