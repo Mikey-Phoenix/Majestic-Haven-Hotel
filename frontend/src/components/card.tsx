@@ -37,7 +37,7 @@ export default function CardImage({ room }: Props) {
         <Link className="w-full" to={"/room"}>
           <Button className="w-full py-2 h-fit bg-[#6f9170] justify-end cursor-pointer">
               <p className="flex-1 pl-5">Book Room</p>
-              <span className="grid h-7 lg:h-9 w-7 lg:w-9 place-items-center rounded-full text-[#6f9170] bg-white transition-transform group-hover:translate-x-0.5">
+              <span className="grid h-7 lg:h-9 w-7 lg:w-9 place-items-center rounded-full text-(--main) bg-white transition-transform group-hover:translate-x-0.5">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
